@@ -375,13 +375,14 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
 
-   dotspacemacs-themes '(doom-gruvbox-light
+
+   dotspacemacs-themes '(spacemacs-dark
+                         doom-gruvbox-light
                          doom-solarized-light
                          doom-sourcerer
                          kaolin-valley-dark
                          doom-solarized-dark
-                         spacemacs-light
-                         spacemacs-dark)
+                         spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -853,7 +854,10 @@ before packages are loaded."
   ;; `SPC g L' - list all Git repositories in the defined paths,
   (setq magit-repository-directories
         '(("~/.emacs.d"  . 0)
-          ("~/projects/" . 2)))
+          ("~/prj/" . 2)))
+  ;; auto save files when invoking magit status without asking
+  (setq magit-save-repository-buffers 'dontask)
+
   ;;
   ;; end of version control configuration
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -868,6 +872,27 @@ before packages are loaded."
   ;; Org-reveal - define were reveal.js files can be found
   ;; (I place reveal.js files in same directory as I write the org files)
   (setq org-reveal-root "")
+
+  ;; export timestamp in a clean way. See https://endlessparentheses.com/better-time-stamps-in-org-export.html
+  (with-eval-after-load 'ox
+    (add-to-list 'org-export-filter-timestamp-functions
+                 #'endless/filter-timestamp)
+
+    (defun endless/filter-timestamp (trans back _comm)
+      "Remove <> around time-stamps."
+      (pcase back
+        ((or `jekyll `html)
+         (replace-regexp-in-string "&[lg]t;" "" trans))
+        (`latex
+         (replace-regexp-in-string "[<>]" "" trans))))
+
+  ;;; Activate custom format only during export. See https://emacs.stackexchange.com/a/34436
+    (setq org-time-stamp-custom-formats
+          '("<%d %b %Y>" . "<%d/%m/%y %a %H:%M>"))
+    (defun my-org-export-ensure-custom-times (backend)
+      (setq-local org-display-custom-times t))
+    (add-hook 'org-export-before-processing-hook 'my-org-export-ensure-custom-times))
+
   ;;
   ;; Define the location of the file to hold tasks
   (with-eval-after-load 'org
@@ -935,6 +960,9 @@ before packages are loaded."
   ;; End of Org-mode Configuration
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+  ;; auto save activated for all files
+  (add-hook 'text-mode-hook 'auto-save-visited-mode)
+  (add-hook 'prog-mode-hook 'auto-save-visited-mode)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Clojure configurations
@@ -1608,3 +1636,26 @@ before packages are loaded."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-save-timeout 1)
+ '(auto-save-visited-interval 2)
+ '(cljr-auto-clean-ns nil)
+ '(cljr-auto-sort-ns nil)
+
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
