@@ -798,6 +798,14 @@ before packages are loaded."
   ;; allow to move beyond the end of line - it is crucial for structural navigation
   (setq evil-move-beyond-eol t)
 
+  ;; insert a single character in normal mode
+  ;; thank you https://emacs.stackexchange.com/a/33991
+  (defun my/insert-char (char count)
+    (interactive "c\np")
+    (insert-char char count))
+
+  (spacemacs/set-leader-keys (kbd "ii") 'my/insert-char)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Magit - forge configuration
   ;;
