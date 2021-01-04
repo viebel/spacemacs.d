@@ -703,6 +703,14 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; mode line time stamp
+  (setq display-time-24hr-format t)
+  (setq display-time-format "%H:%M")        ; add seconds
+  (setq display-time-interval 10)               ; update every second
+  (setq display-time-default-load-average nil) ; don't show load average
+  (setq display-time-mail-string "")           ; don't show mail
+  (display-time-mode 1)                 ; show time in mode line on startup
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Keeping Helm history clean
@@ -797,6 +805,7 @@ before packages are loaded."
 
   ;; allow to move beyond the end of line - it is crucial for structural navigation
   (setq evil-move-beyond-eol t)
+
 
   ;; Solves Symbol Highlight Transient state see https://github.com/syl20bnr/spacemacs/issues/10186
   (defun solve-symbol-highlight ()
@@ -1125,6 +1134,7 @@ before packages are loaded."
            'evil-close-fold)))))
   ;;
   (evil-define-key 'normal clojure-mode-map
+    "F"  'clojure-toggle-reader-comment-sexp
     "zC" 'clojure-hack/toggle-comment-block
     "zO" (lambda () (interactive) (clojure-hack/toggle-comment-block 'open)))
   ;;
