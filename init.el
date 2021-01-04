@@ -795,6 +795,8 @@ before packages are loaded."
   ;; (setq ranger-enter-with-minus t)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+  ;; allow to move beyond the end of line - it is crucial for structural navigation
+  (setq evil-move-beyond-eol t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Magit - forge configuration
