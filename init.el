@@ -62,6 +62,7 @@ This function should only modify configuration layer settings."
      (clojure :variables
               clojure-backend 'cider
               clojure-enable-linters 'clj-kondo
+              clojure-enable-clj-refactor t
               clojure-toplevel-inside-comment-form t
               cider-overlays-use-font-lock t
               cider-repl-buffer-size-limit 100)
