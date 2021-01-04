@@ -798,6 +798,12 @@ before packages are loaded."
   ;; allow to move beyond the end of line - it is crucial for structural navigation
   (setq evil-move-beyond-eol t)
 
+  ;; Solves Symbol Highlight Transient state see https://github.com/syl20bnr/spacemacs/issues/10186
+  (defun solve-symbol-highlight ()
+    (setq ahs-include "^\\_<\\(?:\\s_\\|\\sw\\)+\\_>$"))
+
+  (add-hook 'clojure-mode-hook #'solve-symbol-highlight)
+
   ;; insert a single character in normal mode
   ;; thank you https://emacs.stackexchange.com/a/33991
   (defun my/insert-char (char count)
