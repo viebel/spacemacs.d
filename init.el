@@ -1500,6 +1500,19 @@ before packages are loaded."
   ;;                       (clj-kondo-edn . edn-joker)))
   ;;     (flycheck-add-next-checker (car checkers) (cons 'error (cdr checkers)))))
 
+  ;; prevent from cleverparens to go crazy!!!
+  ;; See https://github.com/luxbock/evil-cleverparens/issues/58#issuecomment-717419683
+  (use-package evil-cleverparens
+    :init
+    (setq evil-cleverparens-use-additional-bindings nil)
+    :config
+    (setq evil-cleverparens-use-additional-bindings t)
+    (unless window-system
+      (setq evil-cp-additional-bindings (assoc-delete-all "M-[" evil-cp-additional-bindings))
+      (setq evil-cp-additional-bindings (assoc-delete-all "M-]" evil-cp-additional-bindings)))
+    (add-to-list 'evil-cp-additional-bindings '("M-n" . evil-cp-wrap-next-square))
+    (add-to-list 'evil-cp-additional-bindings '("M-b" . evil-cp-wrap-previous-square))
+    (evil-cp-set-additional-bindings))
 
   ;; TODO: Spacemacs pull request with these keybindings, updating REPL intro text with details
   ;; You can remove this message with the <M-x cider-repl-clear-help-banner> command.
