@@ -711,6 +711,9 @@ before packages are loaded."
   (setq display-time-mail-string "")           ; don't show mail
   (display-time-mode 1)                 ; show time in mode line on startup
 
+  ;; disable mouse interaction
+  (xterm-mouse-mode 0)
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Keeping Helm history clean
