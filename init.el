@@ -828,6 +828,9 @@ before packages are loaded."
 
   (spacemacs/set-leader-keys (kbd "ii") 'my/insert-char)
 
+  ;; Keys for formatting
+  (spacemacs/set-leader-keys (kbd "xdx") 'just-one-space)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Magit - forge configuration
   ;;
