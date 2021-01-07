@@ -767,6 +767,10 @@ before packages are loaded."
   ;; org-journal user keybinding
   ;; - create a new journal entry
   (spacemacs/set-leader-keys "oj" 'org-journal-new-entry)
+  ;; additional keys for org mode
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "tky" 'org-table-copy-region)
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "tkp" 'org-table-paste-rectangle)
+
   ;;
   ;; Toggle workspaces forward/backwards
   (spacemacs/set-leader-keys "ow" 'eyebrowse-next-window-config)
