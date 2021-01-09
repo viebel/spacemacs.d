@@ -1033,6 +1033,8 @@ before packages are loaded."
   (setq cider-pprint-fn 'fipp)
   ;;
   ;;
+  ;; Do not display Cider help banner
+  (setq cider-repl-display-help-banner nil)
   ;; Indentation of function forms
   ;; https://github.com/clojure-emacs/clojure-mode#indentation-of-function-forms
   (setq clojure-indent-style 'align-arguments)
