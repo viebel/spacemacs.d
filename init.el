@@ -767,6 +767,23 @@ before packages are loaded."
   ;; org-journal user keybinding
   ;; - create a new journal entry
   (spacemacs/set-leader-keys "oj" 'org-journal-new-entry)
+  ;; re-execute code that was removed from org-journal to fix a bug in timestamp insertion
+  ;; The bug is solved by commenting out lines from /Users/viebel/.emacs.d/elpa/27.1/develop/org-journal-20210109.913/org-journal.el:418:0
+  (eval-after-load "calendar"
+    '(progn
+      (define-key calendar-mode-map (kbd "j m") 'org-journal-mark-entries)
+      (define-key calendar-mode-map (kbd "j r") 'org-journal-read-entry)
+      (define-key calendar-mode-map (kbd "j d") 'org-journal-display-entry)
+      (define-key calendar-mode-map "]" 'org-journal-next-entry)
+      (define-key calendar-mode-map "[" 'org-journal-previous-entry)
+      (define-key calendar-mode-map (kbd "j n") 'org-journal-new-date-entry)
+      (define-key calendar-mode-map (kbd "j s f") 'org-journal-search-forever)
+      (define-key calendar-mode-map (kbd "j s F") 'org-journal-search-future)
+      (define-key calendar-mode-map (kbd "j s w") 'org-journal-search-calendar-week)
+      (define-key calendar-mode-map (kbd "j s m") 'org-journal-search-calendar-month)
+      (define-key calendar-mode-map (kbd "j s y") 'org-journal-search-calendar-year)))
+
+
   ;; additional keys for org mode
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "tky" 'org-table-copy-region)
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "tkp" 'org-table-paste-rectangle)
