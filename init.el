@@ -194,7 +194,7 @@ This function should only modify configuration layer settings."
      (treemacs :variables
                treemacs-indentation 1
                treemacs-use-filewatch-mode t
-               treemacs-use-follow-mode t)
+               treemacs-use-follow-mode 'tag)
 
      ;; Customise the Spacemacs themes
      ;; https://develop.spacemacs.org/layers/+themes/theming/README.html
