@@ -170,6 +170,7 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-shell 'eshell
             shell-default-height 30
+            shell-enable-smart-eshell t
             shell-default-position 'bottom)
 
      ;; spacemacs-layouts layer added to set variables
