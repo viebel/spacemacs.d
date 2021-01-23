@@ -986,7 +986,7 @@ before packages are loaded."
   ;; Define a kanban style set of stages for todo tasks
   (with-eval-after-load 'org
     (setq org-todo-keywords
-         '((sequence "TODO" "DOING" "BLOCKED" "REVIEW" "|" "DONE" "ARCHIVED"))))
+         '((sequence "TODO" "DOING" "|" "DONE"))))
   ;;
   ;; The default keywords all use the same colour.
   ;; Make the states easier to distinguish by using different colours
