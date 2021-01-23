@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+#name : javascript-snippet
+#key : javascript-snippet
+#contributor : Yehonathan Sharvit
+# --
+.$1
+[#$2]
+[source,javascript]
+----
+include::{includedir}/chapter06$0/$2.js[]
+----

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : image
+#key : image
+#contributor : Yehonathan Sharvit
+# --
+.$1
+[#$2]
+image::../uml/chapter06$0/$2.png[]

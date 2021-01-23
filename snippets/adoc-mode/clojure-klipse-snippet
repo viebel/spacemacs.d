@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : clojure-klipse-snippet
+#key : clojure-klipse-snippet
+#contributor : Yehonathan Sharvit
+# --
+[.fragment]
+--
+[source.eval-clojure, clojure]
+$1
+--
