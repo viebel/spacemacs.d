@@ -716,6 +716,20 @@ before packages are loaded."
   ;; disable mouse interaction
   (xterm-mouse-mode 0)
 
+  ;; org-capture, inspired by https://blog.jethro.dev/posts/capturing_inbox/
+  (setq org-capture-templates
+        `(("i" "inbox" entry (file "~/Dropbox/org/inbox.org")
+           "* TODO %?")
+          ("l" "link" entry (file "~/Dropbox/org/inbox.org")
+           "* TODO %(org-cliplink-capture)" :immediate-finish t)
+          ("c" "org-protocol-capture" entry (file "~/Dropbox/org/inbox.org")
+           "* TODO [[%:link][%:description]]\n\n %i" :immediate-finish t)
+          ("w"
+           "Default template"
+           entry
+           (file+headline "~/org/capture.org" "Notes")
+           "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
+           :empty-lines 1)))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Keeping Helm history clean
