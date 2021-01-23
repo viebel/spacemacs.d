@@ -184,7 +184,7 @@ This function should only modify configuration layer settings."
      ;; Spell as you type with Flyspell package,
      ;; requires external command - ispell, hunspell, aspell
      ;; SPC S menu, SPC S s to check current word
-     spell-checking
+     (spell-checking :variables spell-checking-enable-auto-dictionary t)
 
      ;; Use original flycheck fringe bitmaps
      (syntax-checking :variables
