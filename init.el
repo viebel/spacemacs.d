@@ -1130,6 +1130,15 @@ before packages are loaded."
   ;;             (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
   ;;
   ;;
+  ;; Additional Clojure key bindings
+  (dolist (m '(clojure-mode
+               clojurec-mode
+               clojurescript-mode
+               clojurex-mode
+               cider-repl-mode
+               cider-clojure-interaction-mode))
+    (spacemacs/set-leader-keys-for-major-mode m
+      "gx" 'cider-xref-fn-refs))
   ;; TODO: review this binding - gives poor user experience
   ;; Multi-line editing in the REPL buffer
   ;; `RTN` creates a new line, `C-RTN` evaluates the code
