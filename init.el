@@ -801,16 +801,31 @@ before packages are loaded."
 
 
   ;; additional keys for org mode
+  ;; use dictionary for auto completion
+  (defun my/use-dict-for-autocompletion ()
+    (interactive)
+    (set (make-local-variable 'company-backends) '(company-ispell)))
+
+  (add-hook 'org-mode-hook 'my/use-dict-for-autocompletion)
+  
+  (spacemacs/set-leader-keys (kbd "aw") 'my/use-dict-for-autocompletion)
+
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "tky" 'org-table-copy-region)
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "tkp" 'org-table-paste-rectangle)
-
+  (evil-define-key 'normal org-mode-map
+    "("  'outline-up-heading)
   ;;
   ;; Toggle workspaces forward/backwards
   (spacemacs/set-leader-keys "ow" 'eyebrowse-next-window-config)
   (spacemacs/set-leader-keys "oW" 'eyebrowse-last-window-config)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
+  ;; flyspell adjustemnts (no mouse-2 on MacOS). From https://emacs.stackexchange.com/a/32930
+  (eval-after-load "flyspell"
+    '(progn
+       (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+       (define-key flyspell-mouse-map [mouse-3] #'undefined)))
+  
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Over-ride Spacemacs defaults
   ;;
