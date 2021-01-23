@@ -1049,6 +1049,9 @@ before packages are loaded."
   (add-hook 'text-mode-hook 'auto-save-visited-mode)
   (add-hook 'prog-mode-hook 'auto-save-visited-mode)
 
+  ;; adoc mode
+  (add-hook 'adoc-mode-hook 'outline-minor-mode)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Clojure configurations
   ;;
