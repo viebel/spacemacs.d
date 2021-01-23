@@ -46,6 +46,7 @@ This function should only modify configuration layer settings."
      ;; Useful for docs.cider.mx editing
      asciidoc
 
+     (plantuml :variables plantuml-jar-path "~/bin/plantUml.jar")
 
      ;; Add tool tips to show doc string of functions
      ;; Show snippets in the auto-completion popup
