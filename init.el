@@ -845,12 +845,13 @@ before packages are loaded."
   ;;
   ;;
   ;; replace / search with helm-swoop in Evil normal state
-  (evil-global-set-key 'normal "/" 'helm-swoop)
+  ;;(evil-global-set-key 'normal "/" 'helm-swoop)
+
   ;;
   ;;
   ;; Do not highlight trailing whitespace
   ;; - whitespace deleted on save using: dotspacemacs-whitespace-cleanup 'all
-  (setq spacemacs-show-trailing-whitespace nil)
+  (setq spacemacs-show-trailing-whitespace t)
   ;;
   ;;
   ;; Open ranger with the minus keybinding - not working
