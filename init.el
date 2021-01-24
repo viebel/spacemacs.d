@@ -1828,7 +1828,7 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-cross-lines t)
  '(evil-want-Y-yank-to-eol nil)
  '(helm-buffer-max-length 100)
- '(org-agenda-files '("~/Dropbox/org/brain" "~/Dropbox/org"))
+ '(org-agenda-files '("~/Dropbox/org/brain" "~/Dropbox/org" "~/Dropbox/TODOS"))
  '(org-brain-path "/Users/viebel/Dropbox/org/brain")
  '(org-directory "~/Dropbox/org")
  '(package-selected-packages
