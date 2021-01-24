@@ -783,6 +783,7 @@ before packages are loaded."
   ;; org-journal user keybinding
   ;; - create a new journal entry
   (spacemacs/set-leader-keys "oj" 'org-journal-new-entry)
+  (spacemacs/set-leader-keys "ao/" 'helm-org-rifle-agenda-files)
   ;; re-execute code that was removed from org-journal to fix a bug in timestamp insertion
   ;; The bug is solved by commenting out lines from /Users/viebel/.emacs.d/elpa/27.1/develop/org-journal-20210109.913/org-journal.el:418:0
   (eval-after-load "calendar"
