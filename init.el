@@ -737,7 +737,12 @@ before packages are loaded."
     "gj" 'outline-forward-same-level
     "gk" 'outline-backward-same-level
     "gl" 'outline-next-visible-heading
-    "gu" 'outline-previous-visible-heading)
+    "gu" 'outline-previous-visible-heading
+    "zr" 'outline-show-all
+    "zm" 'outline-hide-body
+    "zO" 'outline-show-subtree
+    "zo" 'outline-show-children
+    "zc" 'outline-hide-subtree)
   ;; ;; ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
