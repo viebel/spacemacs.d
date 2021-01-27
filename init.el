@@ -731,7 +731,16 @@ before packages are loaded."
            "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
            :empty-lines 1)))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; keybindings for outline-minor-mode navigation, inspired by https://www.modernemacs.com/post/outline-ivy/
+  (evil-define-key '(normal visual motion) 'outline-minor-mode
+    "gh" 'outline-up-heading
+    "gj" 'outline-forward-same-level
+    "gk" 'outline-backward-same-level
+    "gl" 'outline-next-visible-heading
+    "gu" 'outline-previous-visible-heading)
+  ;; ;; ;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Keeping Helm history clean
   (setq history-delete-duplicates t)
   (setq extended-command-history
@@ -1218,6 +1227,8 @@ before packages are loaded."
     "F"  'clojure-toggle-reader-comment-sexp
     "zC" 'clojure-hack/toggle-comment-block
     "zO" (lambda () (interactive) (clojure-hack/toggle-comment-block 'open)))
+
+
   ;;
   ;;
   ;; Experiment: Start Clojure REPL with a specific profile
@@ -1837,7 +1848,12 @@ This function is called at the very end of Spacemacs initialization."
  '(plantuml-indent-level 2)
  '(projectile-globally-ignored-directories
    '(".clj-kondo" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd"))
- '(projectile-use-git-grep t))
+ '(projectile-use-git-grep t)
+ '(safe-local-variable-values
+   '((org-image-actual-width)
+     (javascript-backend . tide)
+     (javascript-backend . tern)
+     (javascript-backend . lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
