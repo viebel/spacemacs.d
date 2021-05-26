@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+#name : javascript-klipse-grid
+#key : javascript-klipse-grid
+#contributor : Yehonathan Sharvit
+# --
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+
+[source.eval-javascript, javascript]
+
+--
+
+a|[.fragment]
+--
+
+[source.eval-javascript, javascript]
+
+--
+|===
+

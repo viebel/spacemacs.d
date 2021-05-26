@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+#name : klipse-javascript
+#key : klipse-javascript
+#contributor : Yehonathan Sharvit
+# --
+[.fragment]
+--
+[source.eval-javascript, javascript]
+
+--
+

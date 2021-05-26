@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(javascript
+   '(typescript
+     sql
+     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -120,7 +122,7 @@ This function should only modify configuration layer settings."
      json
 
      ;; Clojure specific configuration in dotspacemacs/user-config
-     ;; lsp
+     lsp
 
      markdown
 
@@ -157,7 +159,7 @@ This function should only modify configuration layer settings."
 
 
      ;; Text-based file manager with preview
-     ;; SPC a r
+     ;; SPC a t r r
      (ranger :variables
              ranger-show-preview t
              ranger-show-hidden t
@@ -184,7 +186,7 @@ This function should only modify configuration layer settings."
      ;; Spell as you type with Flyspell package,
      ;; requires external command - ispell, hunspell, aspell
      ;; SPC S menu, SPC S s to check current word
-     (spell-checking :variables spell-checking-enable-auto-dictionary t)
+     (spell-checking :variables spell-checking-enable-auto-dictionary nil)
 
      ;; Use original flycheck fringe bitmaps
      (syntax-checking :variables
@@ -228,7 +230,9 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(outline-magic)
+   dotspacemacs-additional-packages '(outline-magic
+                                      browse-at-remote
+                                      all-the-icons)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -698,6 +702,7 @@ This function is called only while dumping Spacemacs configuration. You can
 dump."
   )
 
+;; End of dot-spacemacs/user-config
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
@@ -707,8 +712,8 @@ before packages are loaded."
 
   ;; mode line time stamp
   (setq display-time-24hr-format t)
-  (setq display-time-format "%H:%M")        ; add seconds
-  (setq display-time-interval 10)               ; update every second
+  (setq display-time-format "%H:%M")           ; add seconds
+  (setq display-time-interval 10)              ; update every second
   (setq display-time-default-load-average nil) ; don't show load average
   (setq display-time-mail-string "")           ; don't show mail
   (display-time-mode 1)                 ; show time in mode line on startup
@@ -751,9 +756,9 @@ before packages are loaded."
   (setq extended-command-history
         (delq nil (delete-dups extended-command-history)))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Emacs text rendering optimizations
   ;; https://200ok.ch/posts/2020-09-29_comprehensive_guide_on_handling_long_lines_in_emacs.html
 
@@ -772,10 +777,10 @@ before packages are loaded."
       (global-so-long-mode 1))
 
   ;; End of: Emacs text rendering optimizations
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Doom theme settings
   (setq doom-gruvbox-light-variant "hard")
   ;;
@@ -784,14 +789,14 @@ before packages are loaded."
   ;;
   (with-eval-after-load 'doom-modeline
     (doom-modeline-def-modeline 'practicalli-modeline
-      '(workspace-name window-number modals persp-name buffer-info remote-host vcs)
-      '(repl debug lsp process matches checker buffer-position word-count parrot selection-info misc-info))
+                                '(workspace-name window-number modals persp-name buffer-info remote-host vcs)
+                                '(repl debug lsp process matches checker buffer-position word-count parrot selection-info misc-info))
     (practicalli/setup-custom-doom-modeline))
   ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; User key bindings
   ;;
   ;; org-journal user keybinding
@@ -802,17 +807,17 @@ before packages are loaded."
   ;; The bug is solved by commenting out lines from /Users/viebel/.emacs.d/elpa/27.1/develop/org-journal-20210109.913/org-journal.el:418:0
   (eval-after-load "calendar"
     '(progn
-      (define-key calendar-mode-map (kbd "j m") 'org-journal-mark-entries)
-      (define-key calendar-mode-map (kbd "j r") 'org-journal-read-entry)
-      (define-key calendar-mode-map (kbd "j d") 'org-journal-display-entry)
-      (define-key calendar-mode-map "]" 'org-journal-next-entry)
-      (define-key calendar-mode-map "[" 'org-journal-previous-entry)
-      (define-key calendar-mode-map (kbd "j n") 'org-journal-new-date-entry)
-      (define-key calendar-mode-map (kbd "j s f") 'org-journal-search-forever)
-      (define-key calendar-mode-map (kbd "j s F") 'org-journal-search-future)
-      (define-key calendar-mode-map (kbd "j s w") 'org-journal-search-calendar-week)
-      (define-key calendar-mode-map (kbd "j s m") 'org-journal-search-calendar-month)
-      (define-key calendar-mode-map (kbd "j s y") 'org-journal-search-calendar-year)))
+       (define-key calendar-mode-map (kbd "j m") 'org-journal-mark-entries)
+       (define-key calendar-mode-map (kbd "j r") 'org-journal-read-entry)
+       (define-key calendar-mode-map (kbd "j d") 'org-journal-display-entry)
+       (define-key calendar-mode-map "]" 'org-journal-next-entry)
+       (define-key calendar-mode-map "[" 'org-journal-previous-entry)
+       (define-key calendar-mode-map (kbd "j n") 'org-journal-new-date-entry)
+       (define-key calendar-mode-map (kbd "j s f") 'org-journal-search-forever)
+       (define-key calendar-mode-map (kbd "j s F") 'org-journal-search-future)
+       (define-key calendar-mode-map (kbd "j s w") 'org-journal-search-calendar-week)
+       (define-key calendar-mode-map (kbd "j s m") 'org-journal-search-calendar-month)
+       (define-key calendar-mode-map (kbd "j s y") 'org-journal-search-calendar-year)))
 
 
   ;; additional keys for org mode
@@ -822,9 +827,47 @@ before packages are loaded."
     (set (make-local-variable 'company-backends) '(company-ispell)))
 
   (add-hook 'org-mode-hook 'my/use-dict-for-autocompletion)
-
   (spacemacs/set-leader-keys (kbd "aw") 'my/use-dict-for-autocompletion)
 
+  ;; french support when it makes sense
+  ;;(add-hook 'text-mode-hook
+   ;;         (lambda () (set-input-method "french-postfix")))
+  ;;(add-hook 'org-brain-visualize-mode-hook
+   ;;         (lambda () (set-input-method "french-postfix")))
+
+  ;; integrate org-cliplink with org-brain
+  (defun my/org-brain-cliplink-resource ()
+    "Add a URL from the clipboard as an org-brain resource.
+Suggest the URL title as a description for resource."
+    (require 'org-cliplink)
+    (interactive)
+    (let ((url (org-cliplink-clipboard-content)))
+      (org-brain-add-resource
+       url
+       (org-cliplink-retrieve-title-synchronously url)
+       t)))
+
+    (eval-after-load "org-brain"
+      '(progn
+         (define-key org-brain-visualize-mode-map (kbd "L") 'my/org-brain-cliplink-resource)))
+  
+  ;; end of org-brain
+
+
+  ;; agenda with icons
+  (require 'all-the-icons)
+  (defun fw/agenda-icon-material (name)
+    "Returns an all-the-icons-material icon"
+    (list (all-the-icons-faicon name)))
+
+  ;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
+  (setq org-agenda-category-icon-alist
+        `(("read" ,(fw/agenda-icon-material "book") nil nil :ascent center)
+          ("\\(?:TODO\\|todo\\)" ,(fw/agenda-icon-material "check-square-o") nil nil :ascent center)
+          ("goals" ,(fw/agenda-icon-material "child") nil nil :ascent center)
+          ("mybook" ,(fw/agenda-icon-material "diamond") nil nil :ascent center)
+          ("company" ,(fw/agenda-icon-material "coffee") nil nil :ascent center)))
+  ;; end of agenda with icons
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "tky" 'org-table-copy-region)
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "tkp" 'org-table-paste-rectangle)
   (evil-define-key 'normal org-mode-map
@@ -833,7 +876,7 @@ before packages are loaded."
   ;; Toggle workspaces forward/backwards
   (spacemacs/set-leader-keys "ow" 'eyebrowse-next-window-config)
   (spacemacs/set-leader-keys "oW" 'eyebrowse-last-window-config)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; flyspell adjustemnts (no mouse-2 on MacOS). From https://emacs.stackexchange.com/a/32930
   (eval-after-load "flyspell"
@@ -841,7 +884,7 @@ before packages are loaded."
        (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
        (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Over-ride Spacemacs defaults
   ;;
   ;;
@@ -872,7 +915,7 @@ before packages are loaded."
   ;; Open ranger with the minus keybinding - not working
   ;; Currently opens with deer
   ;; (setq ranger-enter-with-minus t)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; allow to move beyond the end of line - it is crucial for structural navigation
   (setq evil-move-beyond-eol t)
@@ -895,7 +938,7 @@ before packages are loaded."
   ;; Keys for formatting
   (spacemacs/set-leader-keys (kbd "xdx") 'just-one-space)
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Magit - forge configuration
   ;;
   ;; Set the files that are searched for writing tokens
@@ -923,18 +966,18 @@ before packages are loaded."
   ;;       '(("bad-hacks" "really-bad-hacks")))
   ;;
   ;; End of Magit - forge configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Safe structural editing
   ;; for all major modes
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
   ;; for clojure layer only (comment out line above)
   ;; (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-clojure-mode)
   ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Version Control configuration - Git, etc
   ;;
   ;; diff-hl - diff hightlights in right gutter as you type
@@ -960,10 +1003,10 @@ before packages are loaded."
 
   ;;
   ;; end of version control configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Org-mode configuration
   ;;
   ;; I should write a toggle function to show descriptive or literate links in Org-mode
@@ -986,7 +1029,7 @@ before packages are loaded."
         (`latex
          (replace-regexp-in-string "[<>]" "" trans))))
 
-  ;;; Activate custom format only during export. See https://emacs.stackexchange.com/a/34436
+;;; Activate custom format only during export. See https://emacs.stackexchange.com/a/34436
     (setq org-time-stamp-custom-formats
           '("<%d %b %Y>" . "<%d/%m/%y %a %H:%M>"))
     (defun my-org-export-ensure-custom-times (backend)
@@ -1001,7 +1044,7 @@ before packages are loaded."
   ;; Define a kanban style set of stages for todo tasks
   (with-eval-after-load 'org
     (setq org-todo-keywords
-         '((sequence "TODO" "DOING" "|" "DONE"))))
+          '((sequence "TODO" "DOING" "|" "DONE"))))
   ;;
   ;; The default keywords all use the same colour.
   ;; Make the states easier to distinguish by using different colours
@@ -1058,7 +1101,7 @@ before packages are loaded."
   ;; (use-package org-re-reveal :after org)
   ;;
   ;; End of Org-mode Configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; auto save activated for all files
   (add-hook 'text-mode-hook 'auto-save-visited-mode)
@@ -1074,7 +1117,7 @@ before packages are loaded."
   ;; adoc mode
   (add-hook 'adoc-mode-hook 'outline-minor-mode)
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Clojure configurations
   ;;
   ;;
@@ -1114,7 +1157,7 @@ before packages are loaded."
   ;;
   ;;
   ;; anakondo - static analysis using clj-kondo
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; https://github.com/didibus/anakondo
   ;; Provides auto-completion without the need for a REPL
   ;; Add anakondo to `dotspacemacs-additional-packages` list
@@ -1137,7 +1180,7 @@ before packages are loaded."
   ;;
   ;;
   ;; LSP server for Clojure with clj-kondo
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; An alternative approach to the Clojure layer variable clojure-enable-linters 'clj-kondo
   ;; for those environments where the clj-kondo binary does not run (eg. graal).
   ;; Uses a custom script to run the clj-kondo-lsp-server.jar which should be added
@@ -1153,6 +1196,17 @@ before packages are loaded."
   ;;
   ;;
   ;; Additional Clojure key bindings
+  (defun viebel/ns-unmap ()
+    "Unmap all symbols in current namespace"
+    (interactive)
+    (cider-interactive-eval "
+  (clojure.core/println \"Removing aliases and mappings of\" (clojure.core/ns-name clojure.core/*ns*))
+  (clojure.core/doseq [[s] (clojure.core/ns-refers (clojure.core/ns-name clojure.core/*ns*))]
+    (clojure.core/ns-unmap (clojure.core/ns-name clojure.core/*ns*) s))
+  (clojure.core/doseq [[s] (clojure.core/ns-aliases (clojure.core/ns-name clojure.core/*ns*))]
+    (clojure.core/ns-unalias (clojure.core/ns-name clojure.core/*ns*) s))
+ \"namespace unmapped\""))
+
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode
@@ -1160,6 +1214,7 @@ before packages are loaded."
                cider-repl-mode
                cider-clojure-interaction-mode))
     (spacemacs/set-leader-keys-for-major-mode m
+      "enu" 'viebel/ns-unmap
       "gx" 'cider-xref-fn-refs))
   ;; TODO: review this binding - gives poor user experience
   ;; Multi-line editing in the REPL buffer
@@ -1268,10 +1323,10 @@ before packages are loaded."
   ;;
   ;;
   ;; end of clojure configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Web-mode configuration
   ;;
   ;; Changing auto indent size for languages in html layer (web mode) to 2 (defaults to 4)
@@ -1284,10 +1339,10 @@ before packages are loaded."
   (add-hook 'web-mode-hook  'web-mode-indent-2-hook)
   ;;
   ;; End of Web-mode configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Eshell visual enhancements
   ;;
   ;; Add git status visual labels
@@ -1354,12 +1409,12 @@ before packages are loaded."
   ;;
   ;;
   (esh-section esh-dir
-               "\xf07c"  ;  (faicon folder)
+               "\xf07c"                 ;  (faicon folder)
                (abbreviate-file-name (eshell/pwd))
                '(:foreground "olive" :bold bold :underline t))
   ;;
   (esh-section esh-git
-               "\xf397"  ;  (git branch icon)
+               "\xf397"                 ;  (git branch icon)
                (magit-get-current-branch)
                '(:foreground "maroon"))
   ;;
@@ -1368,7 +1423,7 @@ before packages are loaded."
   ;;              pyvenv-virtual-env-name)
   ;;
   (esh-section esh-clock
-               ""  ;  (clock icon)
+               ""                       ;  (clock icon)
                (format-time-string "%H:%M" (current-time))
                '(:foreground "forest green"))
   ;;
@@ -1381,23 +1436,23 @@ before packages are loaded."
   ;;
   ;; "\xf0c9"  ;  (list icon)
   (esh-section esh-num
-               "\x2130"  ;  ℰ (eshell icon)
+               "\x2130"                 ;  ℰ (eshell icon)
                (number-to-string esh-prompt-num)
                '(:foreground "brown"))
   ;;
   ;; Separator between esh-sections
-  (setq esh-sep " ")  ; or " | "
+  (setq esh-sep " ")           ; or " | "
   ;;
   ;; Separator between an esh-section icon and form
   (setq esh-section-delim "")
   ;;
   ;; Eshell prompt header
-  (setq esh-header "\n ")  ; or "\n┌─"
+  (setq esh-header "\n ")               ; or "\n┌─"
   ;;
   ;; Eshell prompt regexp and string. Unless you are varying the prompt by eg.
   ;; your login, these can be the same.
-  (setq eshell-prompt-regexp " \x2130 ")   ; or "└─> "
-  (setq eshell-prompt-string " \x2130 ")   ; or "└─> "
+  (setq eshell-prompt-regexp " \x2130 ") ; or "└─> "
+  (setq eshell-prompt-string " \x2130 ") ; or "└─> "
   ;;
   ;; Choose which eshell-funcs to enable
   ;; (setq eshell-funcs (list esh-dir esh-git esh-python esh-clock esh-num))
@@ -1408,20 +1463,20 @@ before packages are loaded."
   (setq eshell-prompt-function 'esh-prompt-func)
 
   ;; End of Eshell
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Shell configuration
   ;;
   ;; Use zsh for default multi-term shell
   ;; (setq multi-term-program "/usr/bin/zsh")
   ;;
   ;; End of Shell configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; MacOSX
   ;; Disable touchpad zoom gestures
   ;;
@@ -1434,7 +1489,7 @@ before packages are loaded."
   ;;
   ;; (define-key global-map (kbd "<magnify-up>") 'practicalli-nothing)
   ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
@@ -1450,12 +1505,12 @@ before packages are loaded."
   ;;  (("b" "Buffers"
   ;;    ("C-d" spacemacs/kill-matching-buffers-rudely "Rudely"))))
 
-;; (spacemacs|spacebind
-;;  "Compare buffers, files and directories."
-;;  :global
-;;  (("TAB" spacemacs/alternate-buffer "Last buffer")
-;;   ("b" "Buffers"
-;;    ("C-e" spacemacs/kill-matching-buffers-rudely "Kill rudely..."))))
+  ;; (spacemacs|spacebind
+  ;;  "Compare buffers, files and directories."
+  ;;  :global
+  ;;  (("TAB" spacemacs/alternate-buffer "Last buffer")
+  ;;   ("b" "Buffers"
+  ;;    ("C-e" spacemacs/kill-matching-buffers-rudely "Kill rudely..."))))
 
 
   ;; (spacemacs|spacebind
@@ -1479,22 +1534,22 @@ before packages are loaded."
   ;;      ("r" epa-verify-region "Verify region...")
   ;;      ("c" epa-verify-cleartext-in-region "Verify cleartext region..."))))))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;
   ;; (add-hook 'persp-mode-hook
   ;;           (lambda ()
   ;;             (persp-load-state-from-file (expand-file-name "~/.emacs.d/.cache/layouts/persp-my-layout"))))
   ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Configuration no longer used
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Workarounds and bug fixes - temporary hopefully
   ;;
   ;; Undo history size limit, triggering garbage collection
@@ -1517,17 +1572,17 @@ before packages are loaded."
   ;;
   ;; TODO: try setting undo-tree tmp files location
   ;; (setq undo-tree-history-directory-alist '(("." . "~/var/emacs/undo")))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Which-key now using a different sorting order for keybindings
   ;; which-key-sort-order 'which-key-prefix-then-key-order
   ;; https://github.com/syl20bnr/spacemacs/commit/ab3511cfb55aadaa7a13be03356917cca3071c02
   ;; (setq which-key-sort-order 'which-key-key-order-alpha)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Spell checking
   ;; merged into Spacemacs `develop'
   ;;
@@ -1541,9 +1596,9 @@ before packages are loaded."
   ;; Documentation:
   ;; http://develop.spacemacs.org/doc/DOCUMENTATION.html#binding-keys
   ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Redundant configurations - Clojure
   ;;
   ;; disable the new enhanced ClojureScript code completion
@@ -1568,7 +1623,7 @@ before packages are loaded."
   ;; (add-hook 'cider-repl-mode-hook #'subword-mode)
   ;;
   ;;
- ;;
+  ;;
   ;;
   ;;
   ;; Linting with clj-kondo
@@ -1656,7 +1711,7 @@ before packages are loaded."
     )
   (evil-leader/set-key "o y" 'copy-to-clipboard)
   (evil-leader/set-key "o p" 'paste-from-clipboard)
-  ;;; ;;;
+;;; ;;;
 
 
   ;; TODO: Spacemacs pull request with these keybindings, updating REPL intro text with details
@@ -1696,11 +1751,11 @@ before packages are loaded."
   ;;       "(do (require 'figwheel-sidecar.repl-api)
   ;;          (figwheel-sidecar.repl-api/start-figwheel!)
   ;;          (figwheel-sidecar.repl-api/cljs-repl))")
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; unwanted features / bug workarounds
   ;;
   ;; opening recent files on spacemacs home page with mouse click
@@ -1717,28 +1772,28 @@ before packages are loaded."
   ;;
   ;; helm opens a new frame when cursor in a buffer positioned underneath another
   ;; see my gist for details to add...
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; elpa stable repository
   ;; if you want to disable the elpa stable repository put this in your dotfile in the user-init function:
   ;; (setq configuration-layer-elpa-archives '(("melpa" . "melpa.org/packages/")
   ;;   ("org" . "orgmode.org/elpa/") ("gnu" . "elpa.gnu.org/packages/")))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Literal Searching Configuration
   ;;
   ;; Literal search, rather than regex, in spacemacs search - helm-ag
   ;; (setq-default helm-grep-ag-command-option "-Q")
   ;;
   ;; End of Searching Configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; evil-cleverparens - now part of the clojure layer (develop branch)
   ;;
   ;; use the evil-cleverparens layer
@@ -1748,9 +1803,9 @@ before packages are loaded."
   ;; (spacemacs/toggle-evil-cleverparens-on)
   ;; (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
   ;; end of evil-smartparens
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; exclude sayid as it currently does not support nrepl 0.4
   ;;
   ;; Temporary fix
@@ -1764,10 +1819,10 @@ before packages are loaded."
   ;;    '(
   ;;       (clojure :variables clojure-enable-sayid t)
   ;;     )
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Systemd user service
   ;;
   ;; Use the exec-path-from-shell package to get PATH, MANPATH
@@ -1781,19 +1836,19 @@ before packages are loaded."
   ;;                     )))
   ;; (exec-path-from-shell-initialize)
   ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Neotree configuration
   ;;
   ;; Display neotree on the right rather than left (default)
   ;; (setq neo-window-position 'right)
   ;;
   ;; End of Neotree configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; old-school emacs style keybindings that i am replacing with nicer spacemacs alternatives
   ;;
   ;; jr0cket: text scaling keybindings - use spc z x =/-
@@ -1816,11 +1871,10 @@ before packages are loaded."
   ;; (define-key global-map (kbd "c-c m c") 'mc/edit-lines)
   ;;
   ;; end of old-school bindings
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-  )   ;; End of dot-spacemacs/user-config
-
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -1841,28 +1895,37 @@ This function is called at the very end of Spacemacs initialization."
  '(cljr-auto-sort-ns nil)
  '(cljr-warn-on-eval nil)
  '(default-input-method "french-postfix")
+ '(display-line-numbers 'relative)
  '(evil-cleverparens-swap-move-by-word-and-symbol t)
  '(evil-cross-lines t)
  '(evil-want-Y-yank-to-eol nil)
  '(helm-buffer-max-length 100)
- '(org-agenda-files '("~/Dropbox/org/brain" "~/Dropbox/org" "~/Dropbox/TODOS"))
+ '(js-indent-level 2)
+ '(org-agenda-files
+   '("~/Dropbox/org/brain" "~/Dropbox/org" "~/Dropbox/TODOS" "~/prj/data-oriented-programming-book/todos.org"))
  '(org-brain-path "/Users/viebel/Dropbox/org/brain")
  '(org-directory "~/Dropbox/org")
  '(package-selected-packages
-   '(outline-magic lsp-ui lsp-origami origami helm-lsp plantuml-mode tern nodejs-repl livid-mode skewer-mode js2-refactor js2-mode js-doc import-js grizzl helm-gtags ggtags dap-mode lsp-treemacs bui lsp-mode dash-functional counsel-gtags counsel swiper ivy add-node-modules-path clj-refactor inflections multiple-cursors yasnippet-snippets yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unkillable-scratch unicode-fonts undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here tagedit symon symbol-overlay string-inflection spaceline-all-the-icons smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode prettier-js popwin persistent-scratch pcre2el password-generator paradox ox-twbs ox-gfm overseer orgit org-superstar org-rich-yank org-re-reveal org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-brain open-junk-file nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lorem-ipsum link-hint ligature kaolin-themes json-navigator json-mode indent-guide impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag grip-mode graphviz-dot-mode google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-vimish-fold evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes doom-modeline dired-quick-sort diminish diff-hl devdocs define-word csv-mode company-web company-statistics company-quickhelp company-emoji command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-link ace-jump-helm-line ac-ispell))
+   '(sqlup-mode sql-indent github-browse-file outline-magic lsp-ui lsp-origami origami helm-lsp plantuml-mode tern nodejs-repl livid-mode skewer-mode js2-refactor js2-mode js-doc import-js grizzl helm-gtags ggtags dap-mode lsp-treemacs bui lsp-mode dash-functional counsel-gtags counsel swiper ivy add-node-modules-path clj-refactor inflections multiple-cursors yasnippet-snippets yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unkillable-scratch unicode-fonts undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here tagedit symon symbol-overlay string-inflection spaceline-all-the-icons smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs ranger rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode prettier-js popwin persistent-scratch pcre2el password-generator paradox ox-twbs ox-gfm overseer orgit org-superstar org-rich-yank org-re-reveal org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-brain open-junk-file nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lorem-ipsum link-hint ligature kaolin-themes json-navigator json-mode indent-guide impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag grip-mode graphviz-dot-mode google-translate golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flycheck-clj-kondo flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-vimish-fold evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emr emojify emoji-cheat-sheet-plus emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes doom-modeline dired-quick-sort diminish diff-hl devdocs define-word csv-mode company-web company-statistics company-quickhelp company-emoji command-log-mode column-enforce-mode color-identifiers-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adoc-mode ace-link ace-jump-helm-line ac-ispell))
  '(plantuml-indent-level 2)
  '(projectile-globally-ignored-directories
    '(".clj-kondo" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd"))
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
-   '((org-image-actual-width)
+   '((cider-ns-refresh-after-fn . "integrant.repl/resume")
+     (cider-ns-refresh-before-fn . "integrant.repl/suspend")
+     (org-image-actual-width)
      (javascript-backend . tide)
      (javascript-backend . tern)
-     (javascript-backend . lsp))))
+     (javascript-backend . lsp)))
+ '(truncate-lines nil)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-markup-indent-offset 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(cursor ((t (:background "dark cyan"))))
+ '(markup-internal-reference-face ((t (:inherit markup-meta-face :underline t :height 1.0 :width normal)))))
 )
