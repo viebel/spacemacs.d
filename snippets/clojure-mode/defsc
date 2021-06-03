@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: defsc
+# key: defsc
+# --
+(comment
+  (sc.api/defsc $0))

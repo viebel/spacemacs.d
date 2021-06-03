@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: spy
+# key: spy
+# --
+(sc.api/spy)
