@@ -47,8 +47,7 @@ This function should only modify configuration layer settings."
      ;; Enable asciidoc layer for editing asciidoc content
      ;; Useful for docs.cider.mx editing
      asciidoc
-
-     (plantuml :variables plantuml-jar-path "~/bin/plantUml.jar")
+     (plantuml :variables plantuml-jar-path "~/bin/plantuml.jar")
 
      ;; Add tool tips to show doc string of functions
      ;; Show snippets in the auto-completion popup
