@@ -677,7 +677,6 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-
   ;; custom theme modification
   ;; - overriding default height of modeline
   (setq-default
@@ -778,6 +777,18 @@ before packages are loaded."
   ;; End of: Emacs text rendering optimizations
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+  ;; Generate pdf in adoc mode
+  (defun viebel/asciidoctor-pdf ()
+    "Generate pdf from asciidoc file"
+    (interactive)
+    (message "Generating pdf...")
+    (message (shell-command-to-string (format "asciidoctor-pdf %s" (buffer-name))))
+    (message "done"))
+
+  (add-hook 'adoc-mode-hook
+              (lambda ()
+                (define-key adoc-mode-map (kbd "C-c C-c") 'viebel/asciidoctor-pdf)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Doom theme settings
