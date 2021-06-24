@@ -698,6 +698,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
+  (load "~/.spacemacs.d/malli-instrument.el")
   )
 
 ;; End of dot-spacemacs/user-config
