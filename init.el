@@ -836,7 +836,12 @@ before packages are loaded."
   (defun my/use-dict-for-autocompletion ()
     (interactive)
     (set (make-local-variable 'company-backends) '(company-ispell)))
+  (defun my/org-line-wrap ()
+    (spacemacs/toggle-visual-line-navigation-on)
+    ;;(setq-local word-wrap nil)
+    )
 
+  (add-hook 'org-mode-hook 'my/org-line-wrap)
   (add-hook 'org-mode-hook 'my/use-dict-for-autocompletion)
   (spacemacs/set-leader-keys (kbd "aw") 'my/use-dict-for-autocompletion)
 
