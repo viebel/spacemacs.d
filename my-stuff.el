@@ -29,11 +29,10 @@
     res))
 
 (defun my-stuff-ns-name ()
-  (let ((first-form (my-first-form)))
-    (symbol-name (my-node (second (my-node first-form :children))
+  (let ((first-form (my-stuff-first-form)))
+    (symbol-name (my-stuff-node (second (my-stuff-node first-form :children))
                           :value))))
-
 
 (defun my-stuff-rename-buffer-ns ()
   (interactive)
-  (rename-buffer (my-ns-name)))
+  (rename-buffer (my-stuff-ns-name)))
