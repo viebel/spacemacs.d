@@ -700,7 +700,7 @@ This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
   (load "~/.spacemacs.d/malli-instrument.el")
-  )
+  (load "~/.spacemacs.d/my-stuff.el"))
 
 ;; End of dot-spacemacs/user-config
 (defun dotspacemacs/user-config ()
